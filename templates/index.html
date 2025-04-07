@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition - Welcome</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <canvas id="background-canvas"></canvas>
+    <div id="floating-emojis-container"></div>
+    <div class="container">
+        <h1>Welcome!</h1>
+        <p>Please enter your name to begin:</p>
+        <form action="/start_app" method="post" onsubmit="return validateUsername()">
+            <input type="text" id="username" name="username" required>
+            <p id="username-error" style="color: #ff4d4d; display: none; margin-top: -10px; margin-bottom: 10px; font-size: 0.9em;"></p>
+            <button type="submit">Continue</button>
+        </form>
+    </div>
+
+    <script>
+        function validateUsername() {
+            const usernameInput = document.getElementById('username');
+            const usernameError = document.getElementById('username-error');
+            const username = usernameInput.value.trim();
+
+            const containsLetter = /[a-zA-Z]/;
+
+            if (!username) {
+                usernameError.textContent = 'Username cannot be empty.';
+                usernameError.style.display = 'block';
+                return false;
+            }
+
+            if (!containsLetter.test(username)) {
+                usernameError.textContent = 'Username must contain at least one letter.';
+                usernameError.style.display = 'block';
+                usernameInput.focus();
+                return false;
+            }
+
+            usernameError.style.display = 'none';
+            return true;
+        }
+
+        // Add fade-out effect on successful submit
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function(event) {
+            if (validateUsername()) { // Only fade if validation passes
+                event.preventDefault(); // Prevent default immediate submission
+                document.body.classList.add('fade-out');
+                setTimeout(() => {
+                    form.submit(); // Submit form after fade-out
+                }, 400); // Match CSS transition duration
+            }
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index_animations.js') }}"></script>
+</body>
+</html> 

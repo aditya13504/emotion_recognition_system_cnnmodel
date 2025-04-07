@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotion Recognition - Ready?</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <canvas id="background-canvas"></canvas>
+    <div class="container">
+        <h1>Hi, {{ username }}!</h1>
+        <h2>Ready to see your emotions?</h2>
+        <form action="/live" method="get" style="position: relative; /* Needed for positioning eye */">
+            <button type="submit" id="continue-button" class="initially-hidden">Continue</button>
+            <img src="{{ url_for('static', filename='images/eye.jpg') }}" alt="Eye Illustration" id="eye-image" class="initially-hidden">
+        </form>
+    </div>
+
+    <!-- Add script for animations and fade-out transition -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const continueButton = document.getElementById('continue-button');
+            const eyeImage = document.getElementById('eye-image');
+            const form = continueButton.closest('form');
+            const targetUrl = form.action;
+            const animationDuration = 800; // Duration of dust animation in ms
+
+            // 1. Make button appear
+            setTimeout(() => {
+                continueButton.classList.remove('initially-hidden');
+                continueButton.classList.add('dust-appear');
+            }, 300); // Small delay after page load
+
+            // 2. Make eye appear 3 seconds after page load
+            setTimeout(() => {
+                eyeImage.classList.remove('initially-hidden');
+                eyeImage.classList.add('dust-appear');
+            }, 3000); // Changed delay to 3000ms
+
+            // 3. Handle button click
+            continueButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent default immediate navigation
+
+                // Make button disappear
+                continueButton.classList.remove('dust-appear'); // Remove appear animation if it's still running
+                continueButton.classList.add('dust-disappear');
+
+                // Optional: Make eye disappear too
+                // eyeImage.classList.remove('dust-appear');
+                // eyeImage.classList.add('dust-disappear');
+
+                // Wait for disappear animation to mostly finish, then fade out page
+                setTimeout(() => {
+                    document.body.classList.add('fade-out');
+                }, animationDuration - 200); // Start body fade slightly before animation ends
+
+                // Navigate after body fade-out completes
+                setTimeout(() => {
+                    window.location.href = targetUrl; 
+                }, animationDuration + 200); // Existing fade is 400ms, give disappear time
+            });
+        });
+    </script>
+
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html> 

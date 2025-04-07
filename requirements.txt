@@ -1,0 +1,7 @@
+tensorflow>=2.0.0
+opencv-python>=4.5.0
+flask>=2.0.0
+flask-socketio>=5.0.0
+eventlet>=0.30.0
+numpy>=1.19.0
+pillow>=8.0.0
