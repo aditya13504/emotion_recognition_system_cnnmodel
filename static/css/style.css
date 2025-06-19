@@ -1,0 +1,253 @@
+/* Add keyframes for fade-in-up animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 30px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    background-color: #000;
+    color: #f0f0f0;
+    text-align: center;
+    margin: 0;
+    /* For page transitions */
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s ease-out forwards; /* Fade in on load */
+    transition: opacity 0.4s ease-in-out; /* Fade out on navigation */
+}
+
+/* Add keyframes for fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Class to trigger fade-out before navigation */
+body.fade-out {
+    opacity: 0;
+}
+
+#background-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    background: rgba(30, 30, 30, 0.65);
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    position: relative;
+    z-index: 1;
+    margin: 10vh auto;
+    max-width: 90%;
+    width: 600px;
+    /* Entrance Animation */
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0; /* Start hidden for animation */
+    animation-delay: 0.2s; /* Slight delay */
+}
+
+h1, h2 {
+    color: #fff;
+}
+
+input[type="text"] {
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    width: calc(100% - 32px);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: #f0f0f0;
+    font-size: 1rem;
+}
+
+button {
+    padding: 12px 25px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #0b5ed7;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Add styles for emotion-based bounding boxes */
+.bbox {
+    position: absolute;
+    /* border: 2px solid red; Default removed */
+    box-sizing: border-box;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+/* Define emotion colors */
+.bbox.happy { border: 3px solid #ffdd57; }
+.bbox.sad { border: 3px solid #3273dc; }
+.bbox.angry { border: 3px solid #f14668; }
+.bbox.fear { border: 3px solid #9b59b6; }
+.bbox.disgust { border: 3px solid #23d160; }
+.bbox.surprise { border: 3px solid #ff9f43; }
+.bbox.neutral { border: 3px solid #b5b5b5; }
+.bbox.unknown { border: 2px dashed #7a7a7a; }
+
+.emotion-label {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    padding: 3px 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    border-radius: 4px;
+    font-weight: 600;
+    /* Visual confidence hint (opacity) */
+    transition: opacity 0.3s ease;
+}
+
+#video-container {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    margin: 20px auto;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    z-index: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Floating Emojis --- */
+#floating-emojis-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Prevent interaction with emojis */
+    z-index: 0; /* Behind the main container but above the background */
+}
+
+.floating-emoji {
+    position: absolute;
+    bottom: -50px; /* Start below the screen */
+    font-size: 2rem; /* Adjust size as needed */
+    animation: flyUp 5s linear forwards;
+    opacity: 0.8;
+    user-select: none; /* Prevent text selection */
+}
+
+@keyframes flyUp {
+    0% {
+        transform: translateY(0);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-110vh); /* Move way above the screen */
+        opacity: 0;
+    }
+}
+/* --- End Floating Emojis --- */
+
+/* --- Staggered Animation for Headings --- */
+/* Apply to h1/h2 within any container */
+.container h1,
+.container h2 {
+    opacity: 0; /* Start hidden */
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Apply slightly different delays */
+.container h1 {
+    animation-delay: 0.4s; /* Delay matches container entrance slightly */
+}
+
+.container h2 {
+    animation-delay: 0.6s; /* Delay this one a bit more */
+}
+
+/* --- Thanos Snap Dust Effect (Approx) --- */
+@keyframes dust-appear {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) rotate(5deg);
+        filter: blur(3px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0);
+    }
+}
+
+@keyframes dust-disappear {
+    0% {
+        opacity: 1;
+        transform: scale(1) rotate(0deg);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.7) rotate(-5deg);
+        filter: blur(3px);
+    }
+}
+
+.initially-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.dust-appear {
+    visibility: visible;
+    opacity: 0; /* Start at 0 before animation takes over */
+    animation: dust-appear 0.8s ease-out forwards;
+}
+
+.dust-disappear {
+    visibility: visible; /* Keep visible during animation */
+    opacity: 1; /* Start at 1 before animation takes over */
+    animation: dust-disappear 0.8s ease-in forwards;
+    pointer-events: none; /* Prevent clicking while disappearing */
+}
+
+#eye-image {
+    display: block; /* Make it block level */
+    margin: 25px auto 0; /* Add space above, center horizontally */
+    max-width: 170px; /* Increased size from 100px */
+    height: auto;
+    border-radius: 50%; /* Optional: Make it round */
+    /* Inherit animation properties from utility classes */
+}
+
+/* Specific styling for continue button on app page */
+#continue-button {
+    width: 100%; /* Make button stretch */
+    margin-top: 10px; /* Add a bit of space above */
+} 
